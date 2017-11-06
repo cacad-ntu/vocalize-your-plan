@@ -1,0 +1,16 @@
+{
+    "db":{
+        "host": "localhost",
+        "database": "postgres",
+        "username": "postgres",
+        "password": "admin"   
+    },
+    "app":{
+        "normal_plan": false,
+        "desc_plan": true,
+        "voice_plan": true
+    },
+    "log":{
+        "log_path": "data/parser.log"
+    }
+}
