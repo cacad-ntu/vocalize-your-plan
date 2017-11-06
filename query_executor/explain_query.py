@@ -36,7 +36,7 @@ class Explain:
         self.cursor.execute("EXPLAIN (FORMAT JSON) " + self.query)
         plan = self.cursor.fetchall()
 
-        parsed_plan = parse_plan(plan[0][0][0])
+        parsed_plan = parse_plan(plan[0][0][0]["Plan"])
         if self.desc:
             print(parsed_plan)
         if self.voice:
