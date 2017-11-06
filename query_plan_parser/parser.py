@@ -2,6 +2,7 @@
 Main file to parse query plan
 """
 
+from query_plan_parser.hash_join_parser import hash_join_parser
 from query_plan_parser.sort_parser import sort_parser
 from query_plan_parser.groupaggregate_parser import group_aggregate_parser
 
@@ -9,6 +10,7 @@ class ParserSelector:
     """ ParserSelectorClass """
     def __init__(self):
         """ Init Class """
+        self.Hash_Join = hash_join_parser
         self.Sort = sort_parser
         self.GroupAggregate = group_aggregate_parser
 
