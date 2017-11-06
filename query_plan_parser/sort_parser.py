@@ -1,13 +1,13 @@
-from query_plan_parser.parser import parser_plan
+import query_plan_parser.parser
 
 def sort_parser(plan):
     """initialize empty string"""
-    result = "";
+    result = ""
 
     """Get the text of it's child before if exists"""
-    if ["Plans"] in plan:
+    if "Plans" in plan:
         for child in plan["Plans"]:
-            temp = parser_plan(child)
+            temp = query_plan_parser.parser.parse_plan(child)
             result += temp + " "
 
     """Parse the Sort"""

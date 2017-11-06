@@ -1,17 +1,20 @@
 #Hash Join Class
 
-from query_plan_parser.parser import parse_plan
+import query_plan_parser.parser
 
 def hash_join_parser(sentence):
     result = 'The two table is joined with Hash Join'
 
     if 'Hash Cond' in sentence:
         result += ' on the condition' + sentence['Hash Cond'] + '.'
-    elif 'Plans' in sentence:
+    if 'Plans' in sentence:
         result += 'Then, '
-        parse_plan(sentence['Plans'])
+        for child in sentence['Plans']:
+            result += query_plan_parser.parser.parse_plan(child) + " "
     else:
         result += '.'
+    
+    return result
 
     
 

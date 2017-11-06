@@ -2,17 +2,21 @@
 Main file to parse query plan
 """
 
-from query_plan_parser.hash_join_parser import hash_join_parser
-from query_plan_parser.sort_parser import sort_parser
-from query_plan_parser.groupaggregate_parser import group_aggregate_parser
+import query_plan_parser.hash_join_parser as hash_join
+import query_plan_parser.sort_parser as sort
+import query_plan_parser.groupaggregate_parser as groupaggregate
+import query_plan_parser.seq_scan_parser as seq_scan
+import query_plan_parser.hash_parser as hash
 
 class ParserSelector:
     """ ParserSelectorClass """
     def __init__(self):
         """ Init Class """
-        self.Hash_Join = hash_join_parser
-        self.Sort = sort_parser
-        self.GroupAggregate = group_aggregate_parser
+        self.Hash_Join = hash_join.hash_join_parser
+        self.Sort = sort.sort_parser
+        self.Aggregate = groupaggregate.group_aggregate_parser
+        self.Seq_Scan = seq_scan.seq_scan_parser
+        self.Hash = hash.hash_parser
 
 def parse_plan(plan):
     """ Parse json format of query plan """
