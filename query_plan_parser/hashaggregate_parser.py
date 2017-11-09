@@ -1,6 +1,7 @@
 """
 File to parse node type HashAggregate
 """
+# https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 
 import json
 import query_plan_parser.parser
