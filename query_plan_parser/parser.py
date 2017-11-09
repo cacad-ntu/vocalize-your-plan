@@ -10,6 +10,7 @@ import query_plan_parser.hash_parser as hash
 import query_plan_parser.merge_join_parser as merge_join
 import query_plan_parser.limit_parser as limit
 import query_plan_parser.unique_parser as unique
+import query_plan_parser.function_scan_parser as function_scan
 
 class ParserSelector:
     """ ParserSelectorClass """
@@ -23,6 +24,7 @@ class ParserSelector:
         self.Merge_Join = merge_join.merge_join_parser
         self.Limit = limit.limit_parser
         self.Unique = unique.unique_parser
+        self.Function_Scan = function_scan.function_scan_parser
 
 def parse_plan(plan):
     """ Parse json format of query plan """
