@@ -20,7 +20,7 @@ def seq_scan_parser(plan):
         sentence += ". "
     if "Filter" in plan:
         sentence += "This is bounded by the condition: "
-        sentence += plan['Filter']
+        sentence += plan['Filter'].replace("::text", "")
     return sentence
 
 if __name__ == "__main__":

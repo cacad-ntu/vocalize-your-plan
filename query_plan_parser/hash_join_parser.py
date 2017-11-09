@@ -10,7 +10,7 @@ def hash_join_parser(sentence):
     result += ' the result from previous operation is joined with Hash Join'
     
     if 'Hash Cond' in sentence:
-        result += ' with condition ' + sentence['Hash Cond'] + '.'
+        result += ' with condition ' + sentence['Hash Cond'].replace("::text", "") + '.'
     else:
         result += '.'
     
