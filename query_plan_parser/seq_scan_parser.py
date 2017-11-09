@@ -7,10 +7,11 @@ def seq_scan_parser(plan):
     sentence = "It does a sequential scan on relation "
     if "Relation Name" in plan:
         sentence += plan['Relation Name']
-        sentence += " "
     if "Alias" in plan:
-        sentence += "with an alias of "
+        sentence += " with an alias of "
         sentence += plan['Alias']
+        sentence += ". "
+    else:
         sentence += ". "
     if "Filter" in plan:
         sentence += "This is bounded by the condition: "
