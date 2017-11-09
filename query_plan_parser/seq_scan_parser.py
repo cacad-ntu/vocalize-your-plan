@@ -1,6 +1,7 @@
 """
 File to parse node type seq scan
 """
+import json
 
 def seq_scan_parser(plan):
     """ Parser for the Seq Scan Node Type"""
@@ -8,9 +9,12 @@ def seq_scan_parser(plan):
     if "Relation Name" in plan:
         sentence += plan['Relation Name']
     if "Alias" in plan:
-        sentence += " with an alias of "
-        sentence += plan['Alias']
-        sentence += ". "
+        if plan['Relation Name'] == plan['Alias']:
+            sentence += ". "
+        else:
+            sentence += " with an alias of "
+            sentence += plan['Alias']
+            sentence += ". "
     else:
         sentence += ". "
     if "Filter" in plan:
@@ -18,22 +22,19 @@ def seq_scan_parser(plan):
         sentence += plan['Filter']
     return sentence
 
-# sentence = "It does a sequential scan on relation \'"
-# with open("seqscan.json") as test:
-#     plan = json.load(test)
-# if "Relation Name" in plan:
-#     sentence += plan['Relation Name']
-#     sentence += "\' "
-# if "Alias" in plan:
-#     sentence += "with an alias of "
-#     sentence += plan['Alias']
-#     sentence += ". "
-# if "Filter" in plan:
-#     sentence += "This is bounded by the filter: "
-#     sentence += plan['Filter']
-# print(sentence)
-
-# with open("test.json") as test:
-#     plan = json.load(test)
-#     print(plan['Plans'][0])
-    
+if __name__ == "__main__":
+    test = '''
+    {                                
+        "Node Type": "Seq Scan",       
+        "Parent Relationship": "Outer",
+        "Parallel Aware": false,       
+        "Relation Name": "publication",
+        "Alias": "publication",        
+        "Startup Cost": 0.00,          
+        "Total Cost": 15525.89,        
+        "Plan Rows": 574989,           
+        "Plan Width": 0                
+    }
+    '''
+    test_plan = json.loads(test)
+    print(seq_scan_parser(test_plan))

@@ -11,7 +11,6 @@ def limit_parser(plan):
     parsed_plan += " Instead of scanning the whole table, however, it only does so with a limit of "
     total_rows = plan["Plan Rows"]
     parsed_plan += str(total_rows) + " entries."
-    # print(parsed_plan)
     return parsed_plan
 
 if __name__ == "__main__":
@@ -39,4 +38,4 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    limit_parser(test_plan)
+    print(limit_parser(test_plan))
