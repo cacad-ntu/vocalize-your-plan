@@ -1,3 +1,9 @@
+"""
+Parser for sort node type
+"""
+
+
+
 import query_plan_parser.parser
 
 def sort_parser(plan):
