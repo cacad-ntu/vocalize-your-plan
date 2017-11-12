@@ -14,7 +14,7 @@ def index_scan_parser(plan):
         result += "It does an index scan by using an index table "+ plan["Index Name"]
         if "Index Cond" in plan:
             result += " with condition(s) "+ plan["Index Cond"].replace('::text','')
-        result += ". And next it open the " + plan["Relation Name"]+ " table and fetch(es) row(s) pointed by index matched in the scan. "
+        result += ". Next, it open the " + plan["Relation Name"]+ " table and fetch(es) row(s) pointed by index matched in the scan. "
 
         if "Filter" in plan:
             result += "The results then filtered by "+ plan["Filter"].replace('::text','') +". "
