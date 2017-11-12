@@ -8,8 +8,11 @@ import json
 
 def hash_parser(plan):
     """Parser for Hash node type"""
-    sentence = query_plan_parser.parser.parse_plan(plan['Plans'][0])
-    sentence += " The hash function makes a memory hash with rows from the source."
+    if "Plans" in plan:
+        sentence = query_plan_parser.parser.parse_plan(plan['Plans'][0])
+        sentence += " The hash function makes a memory hash with rows from the source."
+    else:
+        sentence = " The hash function makes a memory hash with rows from the source."
 
     return sentence
 
