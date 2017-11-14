@@ -17,7 +17,7 @@ import query_plan_parser.nested_loop_parser as nested_loop
 import query_plan_parser.cte_scan_parser as cte_scan
 import query_plan_parser.append_parser as append
 import query_plan_parser.materialize_parser as materialize
-
+import query_plan_parser.subquery_scan_parser as subquery_scan
 
 class ParserSelector:
     """ ParserSelectorClass """
@@ -39,6 +39,7 @@ class ParserSelector:
         self.CTE_Scan = cte_scan.cte_scan_parser
         self.Append = append.append_parser
         self.Materialize = materialize.materialize_parser
+        self.Subquery_Scan = subquery_scan.subquery_scan_parser
 
 
 def parse_plan(plan):

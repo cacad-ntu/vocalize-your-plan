@@ -21,38 +21,8 @@ def merge_join_parser(sentence):
         result += ' but only the row from the left relation is returned.'
     else:
         result += '.'
-    
-    
+
     return result
 
-if __name__ == "__main__":
-    test = '''{
-                "Node Type": "Merge Join",                                             
-                "Parent Relationship": "Outer",                                        
-                "Parallel Aware": false,                                               
-                "Join Type": "Inner",                                                  
-                "Startup Cost": 48100.69,                                              
-                "Total Cost": 48128.80,                                                
-                "Plan Rows": 575,                                                      
-                "Plan Width": 15,                                                      
-                "Merge Cond": "((a.author)::text = (a_1.author)::text)",
-                "Plans": 
-                [                                                         
-                    {                                                                
-                        "Node Type": "Sort",                                           
-                        "Parent Relationship": "Outer",                                
-                        "Parallel Aware": false,                                       
-                        "Startup Cost": 24050.34,                                      
-                        "Total Cost": 24051.19,                                        
-                        "Plan Rows": 339,                                              
-                        "Plan Width": 15,                                              
-                        "Sort Key": ["a.author"]
-                    }
-                ]                
-            }'''
-
-    print(test)
-    test_plan = json.loads(test)
-    print(merge_join_parser(test_plan))
 
 

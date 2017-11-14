@@ -16,8 +16,7 @@ def hash_join_parser(sentence):
         # table = hash_cond.partition("=")[2]
         result += " Hash Semi Join is performed to find out whether the attribute "
         result += hash_cond
-
-    """Hash Join"""
+    #Hash Join
     else:
         result += " the result from previous operation is joined with Hash Join"
         if 'Hash Cond' in sentence:
