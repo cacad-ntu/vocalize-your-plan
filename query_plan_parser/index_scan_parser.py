@@ -4,6 +4,7 @@ https://www.depesz.com/2013/04/27/explaining-the-unexplainable-part-2/
 """
 
 import query_plan_parser.parser
+import json
 
 def index_scan_parser(plan):
     """initialize empty string"""
@@ -28,3 +29,41 @@ def index_scan_parser(plan):
             result += "The result(s) then filtered by "+ plan["Filter"].replace('::text','') +". "
 
     return result
+
+
+if __name__ == "__main__":
+    test = '''
+   {                                             
+       "Node Type": "Index Scan",                          
+       "Parallel Aware": false,                            
+       "Scan Direction": "Forward",                        
+       "Index Name": "publication_pkey",                   
+       "Relation Name": "publication",                     
+       "Alias": "publication",                             
+       "Startup Cost": 0.42,                               
+       "Total Cost": 8.44,                                 
+       "Plan Rows": 1,                                     
+       "Plan Width": 100,                                  
+       "Index Cond": "((pub_key)::text = 'Saxena96'::text)"
+     }
+    '''
+    test_plan = json.loads(test)
+    print(index_scan_parser(test_plan))
+
+    test = '''
+   {                                             
+       "Node Type": "Index Only Scan",                           
+       "Parallel Aware": false,                                  
+       "Scan Direction": "Forward",                             
+       "Index Name": "publication_pkey",                         
+       "Relation Name": "publication",                           
+       "Alias": "publication",                                   
+       "Startup Cost": 0.42,                                     
+       "Total Cost": 8.44,                                       
+       "Plan Rows": 1,                                           
+       "Plan Width": 21,                                         
+       "Index Cond": "(pub_key = 'journals/acta/Saxena96'::text)"
+     }
+    '''
+    test_plan = json.loads(test)
+    print(index_scan_parser(test_plan))

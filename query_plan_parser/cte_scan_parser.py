@@ -4,6 +4,7 @@ https://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/
 """
 
 import query_plan_parser.parser
+import json 
 
 def cte_scan_parser(plan):
     """initialize empty string"""
@@ -27,3 +28,21 @@ def cte_scan_parser(plan):
             result += "The results then filtered by "+ plan["Filter"].replace('::text','') +". "
     
     return result
+
+if __name__ == "__main__":
+
+    test = '''
+   {                                             
+       "Node Type": "CTE Scan",                  
+        "Parent Relationship": "Outer",           
+        "Parallel Aware": false,                  
+        "CTE Name": "x",                          
+        "Alias": "x",                             
+        "Startup Cost": 0.00,                     
+        "Total Cost": 11651.98,                   
+        "Plan Rows": 582599,                      
+        "Plan Width": 218       
+     }
+    '''
+    test_plan = json.loads(test)
+    print(cte_scan_parser(test_plan))
