@@ -24,5 +24,20 @@ def merge_join_parser(sentence):
 
     return result
 
-
+if __name__ == "__main__":
+    test = '''
+    {                                                   
+        "Node Type": "Merge Join",                                             
+        "Parent Relationship": "Outer",                                        
+        "Parallel Aware": false,                                               
+        "Join Type": "Inner",                                                  
+        "Startup Cost": 48100.69,                                              
+        "Total Cost": 48128.80,                                                
+        "Plan Rows": 575,                                                      
+        "Plan Width": 15,                                                      
+        "Merge Cond": "((a.author)::text = (a_1.author)::text)"
+    }
+    '''
+    test_plan = json.loads(test)
+    print(merge_join_parser(test_plan))
 
