@@ -2,18 +2,20 @@
 Main file to parse query plan
 """
 
+import random
+
 import query_plan_parser.hash_join_parser as hash_join
 import query_plan_parser.sort_parser as sort
 import query_plan_parser.groupaggregate_parser as groupaggregate
 import query_plan_parser.seq_scan_parser as seq_scan
-import query_plan_parser.hash_parser as hash
+import query_plan_parser.hash_parser as hash_parser
 import query_plan_parser.merge_join_parser as merge_join
 import query_plan_parser.limit_parser as limit
 import query_plan_parser.unique_parser as unique
 import query_plan_parser.function_scan_parser as function_scan
 import query_plan_parser.index_scan_parser as index_scan
 import query_plan_parser.values_scan_parser as values_scan
-import query_plan_parser.nested_loop_parser as nested_loop 
+import query_plan_parser.nested_loop_parser as nested_loop
 import query_plan_parser.cte_scan_parser as cte_scan
 import query_plan_parser.append_parser as append
 import query_plan_parser.materialize_parser as materialize
@@ -27,7 +29,7 @@ class ParserSelector:
         self.Sort = sort.sort_parser
         self.Aggregate = groupaggregate.group_aggregate_parser
         self.Seq_Scan = seq_scan.seq_scan_parser
-        self.Hash = hash.hash_parser
+        self.Hash = hash_parser.hash_parser
         self.Merge_Join = merge_join.merge_join_parser
         self.Limit = limit.limit_parser
         self.Unique = unique.unique_parser
@@ -42,9 +44,17 @@ class ParserSelector:
         self.Subquery_Scan = subquery_scan.subquery_scan_parser
 
 
-def parse_plan(plan):
+def parse_plan(plan, start=False):
     """ Parse json format of query plan """
     selector = ParserSelector()
     parser = getattr(selector, plan["Node Type"].replace(" ", "_"))
-    parsed_plan = parser(plan)
+    parsed_plan = parser(plan, start)
     return parsed_plan
+
+def get_conjuction(start):
+    """ Get random conjuction """
+    if start:
+        return "First, "
+    CONJUNCTION_LIST=["Next, ", "After that, ", "Then, ", "Consequently, "]
+    return random.choice(CONJUNCTION_LIST)
+    
