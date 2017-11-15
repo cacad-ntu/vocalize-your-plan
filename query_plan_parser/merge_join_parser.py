@@ -15,7 +15,7 @@ def merge_join_parser(sentence):
     result += ' the result from previous operation is joined with Hash Join'
 
     if 'Merge Cond' in sentence:
-        result += ' with condition ' + sentence['Merge Cond']
+        result += ' with condition ' + sentence['Merge Cond'].replace("::text", "")
 
     if 'Join Type' == 'Semi':
         result += ' but only the row from the left relation is returned.'

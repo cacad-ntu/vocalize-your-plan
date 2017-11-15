@@ -10,10 +10,10 @@ def group_aggregate_parser(plan):
     parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0])
     parsed_plan += " the result is grouped by " 
     for group_key in plan["Group Key"]:
-        parsed_plan += group_key + ", "
+        parsed_plan += group_key.replace("::text", "") + ", "
     parsed_plan = parsed_plan[:-2]
     if "Filter" in plan:
-        parsed_plan += " then bounded with condition " + plan["Filter"]
+        parsed_plan += " then bounded with condition " + plan["Filter"].replace("::text", "")
     parsed_plan += "."
     return parsed_plan
 

@@ -10,7 +10,7 @@ def hash_aggregate_parser(plan):
     """Parser for HashAggregate node type"""
     parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0])
     if len(plan["Group Key"]) == 1:
-        sentence = "It hashes all the rows based on the key " + plan["Group Key"]
+        sentence = "It hashes all the rows based on the key " + plan["Group Key"].replace("::text", "")
     else:
         sentence = "It hashes all the rows based on the keys "
         for i in plan["Group Key"]:
