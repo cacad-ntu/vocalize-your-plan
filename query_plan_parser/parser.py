@@ -64,4 +64,13 @@ def get_conjuction(start=False):
     if start:
         return "First, "
     return random.choice(CONJUNCTION_LIST)
-    
+
+def initplan(plan, start=False):
+    """ Check for InitPlan """
+    result = str(plan["Subplan Name"])
+ 
+    if "Parent Relationship" in plan:
+        if plan["Parent Relationship"] == "InitPlan":
+            result = get_conjuction(start)
+            result += "The " + plan["Node Type"] +  " node and its subsequent child node is executed first since the result from this node needs to be calculated first and it is only calculated once for the whole query."
+    return result
