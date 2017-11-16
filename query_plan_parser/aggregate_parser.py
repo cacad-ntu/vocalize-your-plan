@@ -7,8 +7,10 @@ import query_plan_parser.parser
 
 def aggregate_parser(plan, start=False):
     """ Parser for Aggregate node type """
+    parsed_plan = query_plan_parser.parser.initplan(plan, start)
+
     if plan["Strategy"] == "Sorted":
-        parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
+        parsed_plan += query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
 
         parsed_plan += " " + query_plan_parser.parser.get_conjuction()
 
@@ -49,7 +51,8 @@ if __name__ == "__main__":
     {                                                        
        "Node Type": "Aggregate",                                      
        "Strategy": "Sorted",                                          
-       "Partial Mode": "Simple",                                      
+       "Partial Mode": "Simple",  
+       "Parent Relationship": "InitPlan",                                    
        "Parallel Aware": false,                                       
        "Startup Cost": 513461.61,                                     
        "Total Cost": 519210.47,                                       
@@ -74,7 +77,7 @@ if __name__ == "__main__":
     }
     '''
     JSON_PLAN = json.loads(PLAN)
-    print(group_aggregate_parser(JSON_PLAN, start=True))
+    print(aggregate_parser(JSON_PLAN, start=True))
 
     test = '''
     {                                                   
@@ -102,4 +105,4 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    print(hash_aggregate_parser(test_plan))
+    print(aggregate_parser(test_plan))
