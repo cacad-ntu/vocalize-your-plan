@@ -29,7 +29,7 @@ class Explain:
 
         self.vocalizator = Vocalizator()
 
-    def explain(self, query=""):
+    def explain(self, query="", ret=False):
         """ explain query """
         if query != "":
             self.query = query
@@ -39,15 +39,18 @@ class Explain:
         plan = self.cursor.fetchall()
 
         parsed_plan = parse_plan(plan[0][0][0]["Plan"], start=True)
-        
+
         if self.debug:
             print(json.dumps(plan[0][0][0]["Plan"], indent=4))
         if self.desc:
             print(parsed_plan)
         if self.voice:
             self.vocalizator.voice(parsed_plan)
-        
+
         logging.info("Parsed plan: " + parsed_plan)
+
+        if ret:
+            return parsed_plan
 
     def loop_explain(self):
         """ continuously explain queries """
