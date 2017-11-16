@@ -1,14 +1,14 @@
 """
 File to parse node type limit
+https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 """
-# https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 
-import query_plan_parser.parser
 import json
+import query_plan_parser.parser
 
-def limit_parser(plan):
+def limit_parser(plan, start=False):
     """Parser function for node type limit"""
-    parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0])
+    parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
     parsed_plan += " Instead of scanning the whole table, however, it only does so with a limit of "
     total_rows = plan["Plan Rows"]
     parsed_plan += str(total_rows) + " entries."
@@ -23,7 +23,7 @@ if __name__ == "__main__":
        "Total Cost": 0.27,                
        "Plan Rows": 10,                   
        "Plan Width": 106,                 
-       "Plans": [                         
+       "Plans": [
          {                                
            "Node Type": "Seq Scan",       
            "Parent Relationship": "Outer",
@@ -39,4 +39,4 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    print(limit_parser(test_plan))
+    print(limit_parser(test_plan, start=True))

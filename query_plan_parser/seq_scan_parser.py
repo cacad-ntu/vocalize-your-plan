@@ -1,26 +1,27 @@
 """
 File to parse node type seq scan
+https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 """
-# https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
-import json
 
-def seq_scan_parser(plan):
+import json
+import query_plan_parser.parser
+
+def seq_scan_parser(plan, start=False):
     """ Parser for the Seq Scan Node Type"""
-    sentence = "It does a sequential scan on relation "
+    sentence = query_plan_parser.parser.get_conjuction(start)
+    sentence += "it does a sequential scan on relation "
     if "Relation Name" in plan:
         sentence += plan['Relation Name']
     if "Alias" in plan:
-        if plan['Relation Name'] == plan['Alias']:
-            sentence += ". "
-        else:
+        if plan['Relation Name'] != plan['Alias']:
             sentence += " with an alias of "
             sentence += plan['Alias']
-            sentence += ". "
-    else:
-        sentence += ". "
+    sentence += "."
     if "Filter" in plan:
-        sentence += "This is bounded by the condition: "
-        sentence += plan['Filter'].replace("::text", "") + ". "
+        sentence += " This is bounded by the condition "
+        sentence += plan['Filter'].replace("::text", "")
+        sentence += "."
+        
     return sentence
 
 if __name__ == "__main__":
@@ -38,4 +39,4 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    print(seq_scan_parser(test_plan))
+    print(seq_scan_parser(test_plan, start=True))

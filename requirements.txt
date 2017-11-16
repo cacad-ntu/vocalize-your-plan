@@ -1,2 +1,4 @@
+easygui==0.98.1
 psycopg2==2.7.3.2
+pypiwin32==220
 pyttsx3==2.6

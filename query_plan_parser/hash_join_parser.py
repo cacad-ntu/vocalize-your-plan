@@ -1,29 +1,23 @@
-import query_plan_parser.parser
-import json
+"""
+Hash Join parser
+"""
 
-def hash_join_parser(sentence):
+import json
+import query_plan_parser.parser
+
+def hash_join_parser(plan, start=False):
     result = ""
 
-    if "Plans" in sentence:
-        for child in sentence["Plans"]:
-            result += query_plan_parser.parser.parse_plan(child)
+    result += query_plan_parser.parser.parse_plan(plan["Plans"][1], start) + " "
+    result += query_plan_parser.parser.parse_plan(plan["Plans"][0]) + " "
 
-    """Hash Semi Join"""
-    if str(sentence["Join Type"]) == "Semi":
-        hash_cond = str(sentence["Hash Cond"]).replace("::text", "")
-        hash_cond = hash_cond.replace("=", "is inside the table")
-        # attr = hash_cond.partition("=")[0]
-        # table = hash_cond.partition("=")[2]
-        result += " Hash Semi Join is performed to find out whether the attribute "
-        result += hash_cond
-    #Hash Join
+    result += "The result from previous operation is joined using Hash "
+    result += plan["Join Type"] + " Join"
+    if 'Hash Cond' in plan:
+        result += ' with condition ' + plan['Hash Cond'].replace("::text", "") + '.'
     else:
-        result += " the result from previous operation is joined with Hash Join"
-        if 'Hash Cond' in sentence:
-            result += ' with condition ' + sentence['Hash Cond'].replace("::text", "") + '.'
-        else:
-            result += '.'
-    
+        result += '.'
+
     return result
 
 if __name__ == "__main__":
@@ -63,4 +57,7 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    print(hash_join_parser(test_plan))
+    print(hash_join_parser(test_plan, start=True))
+
+    test_plan["Join Type"] = "Inner"
+    print(hash_join_parser(test_plan, start=True))

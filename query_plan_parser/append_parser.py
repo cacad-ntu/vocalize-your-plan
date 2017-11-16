@@ -3,25 +3,25 @@ Parser for append node type
 https://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/
 """
 
-import query_plan_parser.parser
 import json
+import query_plan_parser.parser
 
-def append_parser(plan):
+def append_parser(plan, start=False):
     """initialize empty string"""
     result = ""
 
-    """Get the text of it's child before if exists"""
-    
+    # Get the text of it's child before if exists
     if "Plans" in plan:
         for child in plan["Plans"]:
-            temp = query_plan_parser.parser.parse_plan(child)
+            temp = query_plan_parser.parser.parse_plan(child, start)
+            if start:
+                start=False
             result += temp + " "
-    
 
-
-    """Parse the values scan"""
-    if(plan["Node Type"] == "Append"):
-        result += "Then, it returns all the scan result as one resultset."
+    #Parse the values scan
+    if plan["Node Type"] == "Append":
+        result += query_plan_parser.parser.get_conjuction(start)
+        result += "all of the scan results is combined as one resultset."
 
     return result
 
@@ -61,4 +61,4 @@ if __name__ == "__main__":
      }
     '''
     test_plan = json.loads(test)
-    print(append_parser(test_plan))
+    print(append_parser(test_plan, start=True))

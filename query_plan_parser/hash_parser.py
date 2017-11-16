@@ -3,16 +3,18 @@ File to parse node type hash
 """
 # https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 
-import query_plan_parser.parser
 import json
+import query_plan_parser.parser
 
-def hash_parser(plan):
+def hash_parser(plan, start=False):
     """Parser for Hash node type"""
+        
     if "Plans" in plan:
-        sentence = query_plan_parser.parser.parse_plan(plan['Plans'][0])
+        sentence = query_plan_parser.parser.parse_plan(plan['Plans'][0], start)
         sentence += " The hash function makes a memory hash with rows from the source."
     else:
-        sentence = " The hash function makes a memory hash with rows from the source."
+        sentence = query_plan_parser.parser.get_conjuction(start)
+        sentence += "the hash function makes a memory hash with rows from the source."
 
     return sentence
 
@@ -43,4 +45,4 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    print(hash_parser(test_plan))
+    print(hash_parser(test_plan, start=True))

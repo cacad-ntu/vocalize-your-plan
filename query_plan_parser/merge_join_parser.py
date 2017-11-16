@@ -1,21 +1,26 @@
 """
+Merge Join parser
 http://www.postgresql-archive.org/Query-plan-for-Merge-Semi-Join-td5990041.html
 """
 
-import query_plan_parser.parser
 import json
+import query_plan_parser.parser
 
-def merge_join_parser(sentence):
+def merge_join_parser(plan, start=False):
+    """ Merge Join parser """
     result = ''
 
-    if 'Plans' in sentence:
-        for child in sentence['Plans']:
-            result += query_plan_parser.parser.parse_plan(child)
+    if 'Plans' in plan:
+        for child in plan['Plans']:
+            result += query_plan_parser.parser.parse_plan(child, start) + " "
+            if start:
+                start = False
 
-    result += ' the result from previous operation is joined with Hash Join'
+    result += query_plan_parser.parser.get_conjuction(start)
+    result += 'the result from previous operation is joined using Merge Join'
 
-    if 'Merge Cond' in sentence:
-        result += ' with condition ' + sentence['Merge Cond'].replace("::text", "")
+    if 'Merge Cond' in plan:
+        result += ' with condition ' + plan['Merge Cond'].replace("::text", "")
 
     if 'Join Type' == 'Semi':
         result += ' but only the row from the left relation is returned.'
@@ -35,9 +40,13 @@ if __name__ == "__main__":
         "Total Cost": 48128.80,                                                
         "Plan Rows": 575,                                                      
         "Plan Width": 15,                                                      
-        "Merge Cond": "((a.author)::text = (a_1.author)::text)"
+        "Merge Cond": "((a.author)::text = (a_1.author)::text)",
+        "Plans" :[
+            {
+                "Node Type": "Unrecognize"
+            }
+        ]
     }
     '''
     test_plan = json.loads(test)
-    print(merge_join_parser(test_plan))
-
+    print(merge_join_parser(test_plan, start=True))

@@ -1,19 +1,24 @@
 """
-
+Subquery scan parser
 """
 
-import query_plan_parser.parser
 import json
+import query_plan_parser.parser
 
-def subquery_scan_parser(sentence):
+def subquery_scan_parser(plan, start=False):
+    """ Subquery scan parser """
     result = ''
 
-    if 'Plans' in sentence:
-        for child in sentence['Plans']:
-            result += query_plan_parser.parser.parse_plan(child)
+    if 'Plans' in plan:
+        for child in plan['Plans']:
+            result += query_plan_parser.parser.parse_plan(child, start) + " "
+            if start:
+                start = False
 
-    result += ' the Subquery Scan process the result from the previous operations and output it without any changes. The purpose of Subquery scan is mainly for internal bookkeeping.'
-      
+    result += query_plan_parser.parser.get_conjuction(start)
+    result += 'Subquery Scan is performed on the result from the previous operations and output it without any changes '
+    result += '(the purpose of Subquery scan is mainly for internal bookkeeping).'
+
     return result
 
 if __name__ == "__main__":
@@ -27,8 +32,13 @@ if __name__ == "__main__":
         "Total Cost": 48113.40,                                           
         "Plan Rows": 170,                                                 
         "Plan Width": 15,                                                 
-        "Filter": "(NOT (hashed SubPlan 1))"
+        "Filter": "(NOT (hashed SubPlan 1))",
+        "Plans":[
+            {
+                "Node Type": "Another Operation"
+            }
+        ]
     }
     '''
     test_plan = json.loads(test)
-    print(subquery_scan_parser(test_plan))
+    print(subquery_scan_parser(test_plan, start=True))

@@ -32,7 +32,7 @@ def main():
     app_conf = conf["app"]
     explanator = Explain(
         db_conf["host"], db_conf["database"], db_conf["username"], db_conf["password"],
-        app_conf["normal_plan"], app_conf["desc_plan"], app_conf["voice_plan"]
+        app_conf["desc_plan"], app_conf["voice_plan"], app_conf["debug_plan"]
     )
     explanator.loop_explain()
 

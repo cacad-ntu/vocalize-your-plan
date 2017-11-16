@@ -3,34 +3,36 @@ Parser for sort node type
 https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 """
 
-
 import json
 import query_plan_parser.parser
 
-def sort_parser(plan):
-    """initialize empty string"""
+def sort_parser(plan, start=False):
+    """ Sort Parser """
     result = ""
 
-    """Get the text of it's child before if exists"""
+    # Get the text of it's child before if exists
     if "Plans" in plan:
         for child in plan["Plans"]:
-            temp = query_plan_parser.parser.parse_plan(child)
+            temp = query_plan_parser.parser.parse_plan(child, start)
             result += temp + " "
+            if start:
+                start = False
 
-    """Parse the Sort"""
-    if(plan["Node Type"] == "Sort"):
+    # Parse the Sort
+    if plan["Node Type"] == "Sort":
+        result += query_plan_parser.parser.get_conjuction(start)
+        result += "the result is sorted by using attribute "
         if "DESC" in plan["Sort Key"]:
-            result += "Then, the result is sort by using attribute " + str(plan["Sort Key"].replace('DESC','')) +" in desceding order."
+            result += str(plan["Sort Key"].replace('DESC', '')) +" in desceding order."
         elif "INC" in plan["Sort Key"]:
-            result += "Then, the result is sort by using attribute " + str(plan["Sort Key"].replace('INC','')) +" in increasing order."
+            result += str(plan["Sort Key"].replace('INC', '')) +" in increasing order."
         else:
-            result += "Then, the result is sort by using attribute " + str(plan["Sort Key"])+ "."
+            result += str(plan["Sort Key"])+ "."
 
     return result
 
 
 if __name__ == "__main__":
-
     test = '''
    {                                             
          "Node Type": "Sort",               
@@ -57,4 +59,4 @@ if __name__ == "__main__":
      }
     '''
     test_plan = json.loads(test)
-    print(sort_parser(test_plan))
+    print(sort_parser(test_plan, start=True))

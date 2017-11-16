@@ -1,15 +1,16 @@
 """
 File to parse node type unique
+https://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/
 """
-# https://www.depesz.com/2013/05/19/explaining-the-unexplainable-part-4/
 
-import query_plan_parser.parser
 import json
+import query_plan_parser.parser
 
-def unique_parser(plan):
+def unique_parser(plan, start=False):
     """Parser function for node type unique"""
-    parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0])
-    parsed_plan += " On the sorted data, it scans each row and discards those with the same value as the previous row."
+    parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0], start) + " "
+    parsed_plan += query_plan_parser.parser.get_conjuction()
+    parsed_plan += "on the sorted data, it scans each row and discards those with the same value as the previous row."
     return parsed_plan
 
 if __name__ == "__main__":
@@ -36,4 +37,5 @@ if __name__ == "__main__":
     }
     '''
     test_plan = json.loads(test)
-    print(unique_parser(test_plan))
+    print(unique_parser(test_plan, start=True))
+    

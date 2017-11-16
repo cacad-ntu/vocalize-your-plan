@@ -2,31 +2,31 @@
 Parser for nested loop node type
 https://www.depesz.com/2013/05/09/explaining-the-unexplainable-part-3/
 """
-import query_plan_parser.parser
-import json
 
-def nested_loop_parser(plan):
-    """initialize empty string"""
+import json
+import query_plan_parser.parser
+
+def nested_loop_parser(plan, start=False):
+    """ Nested Loop Parser """
     result = ""
 
-    """Get the text of it's child"""
-    temp = query_plan_parser.parser.parse_plan(plan["Plans"][0])
-    result += "First, " + temp + " For every row of this results, "
+    # Get the text of it's child
+    temp = query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
+    result += temp + " "
     temp = query_plan_parser.parser.parse_plan(plan["Plans"][1])
-    result += temp
+    result += temp + " "
 
 
-    """Parse the nested loop """
-    if(plan["Node Type"] == "Nested Loop"):
-        result += "Then, the loop result between the first scan and second scan are returned as new rows."
+    # Parse the nested loop
+    result += "Then, the join result between both scan results are returned as new rows."
 
     return result
 
 if __name__ == "__main__":
 
     test = '''
-   {                                             
-         "Node Type": "Nested Loop",                                      
+    {                                             
+       "Node Type": "Nested Loop",                                      
        "Parallel Aware": false,                                         
        "Join Type": "Inner",                                            
        "Startup Cost": 0.42,                                            
@@ -62,7 +62,7 @@ if __name__ == "__main__":
            "Filter": "(year = 2015)"                                    
          }                                                              
        ]                                                                
-     }
+    }
     '''
     test_plan = json.loads(test)
-    print(nested_loop_parser(test_plan))
+    print(nested_loop_parser(test_plan, start=True))

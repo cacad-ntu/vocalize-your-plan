@@ -6,9 +6,9 @@
         "password": "admin"   
     },
     "app":{
-        "normal_plan": false,
         "desc_plan": true,
-        "voice_plan": true
+        "voice_plan": true,
+        "debug_plan": false
     },
     "log":{
         "log_path": "data/parser.log"

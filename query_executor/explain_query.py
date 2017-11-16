@@ -2,8 +2,9 @@
 Class to explain query plan (without execution)
 """
 
+import json
 import logging
-import psycopg2\
+import psycopg2
 
 from query_plan_parser.parser import parse_plan
 from voice_the_string.vocalize import Vocalizator
@@ -12,7 +13,7 @@ class Explain:
     """ Class to explain query """
     def __init__(
             self, host, dbname, user, password,
-            normal=False, desc=True, voice=False
+            desc=True, voice=False, debug=False
         ):
         """ init Explain """
         conn_string = "host='%s' dbname='%s' user='%s' password='%s'"%(host, dbname, user, password)
@@ -20,9 +21,10 @@ class Explain:
         self.cursor = self.conn.cursor()
         logging.info("Connected to database: " + conn_string)
 
-        self.normal = normal
         self.desc = desc
         self.voice = voice
+        self.debug = debug
+
         self.query = ""
 
         self.vocalizator = Vocalizator()
@@ -36,11 +38,15 @@ class Explain:
         self.cursor.execute("EXPLAIN (FORMAT JSON) " + self.query)
         plan = self.cursor.fetchall()
 
-        parsed_plan = parse_plan(plan[0][0][0]["Plan"])
+        parsed_plan = parse_plan(plan[0][0][0]["Plan"], start=True)
+        
+        if self.debug:
+            print(json.dumps(plan[0][0][0]["Plan"], indent=4))
         if self.desc:
             print(parsed_plan)
         if self.voice:
             self.vocalizator.voice(parsed_plan)
+        
         logging.info("Parsed plan: " + parsed_plan)
 
     def loop_explain(self):

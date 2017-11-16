@@ -4,9 +4,10 @@ Main file to parse query plan
 
 import random
 
+import query_plan_parser.generic_parser as generic
 import query_plan_parser.hash_join_parser as hash_join
 import query_plan_parser.sort_parser as sort
-import query_plan_parser.groupaggregate_parser as groupaggregate
+import query_plan_parser.aggregate_parser as aggregate
 import query_plan_parser.seq_scan_parser as seq_scan
 import query_plan_parser.hash_parser as hash_parser
 import query_plan_parser.merge_join_parser as merge_join
@@ -25,9 +26,11 @@ class ParserSelector:
     """ ParserSelectorClass """
     def __init__(self):
         """ Init Class """
+        self.generic_parser = generic.generic_parser
+
         self.Hash_Join = hash_join.hash_join_parser
         self.Sort = sort.sort_parser
-        self.Aggregate = groupaggregate.group_aggregate_parser
+        self.Aggregate = aggregate.aggregate_parser
         self.Seq_Scan = seq_scan.seq_scan_parser
         self.Hash = hash_parser.hash_parser
         self.Merge_Join = merge_join.merge_join_parser
@@ -47,14 +50,18 @@ class ParserSelector:
 def parse_plan(plan, start=False):
     """ Parse json format of query plan """
     selector = ParserSelector()
-    parser = getattr(selector, plan["Node Type"].replace(" ", "_"))
+    try:
+        parser = getattr(selector, plan["Node Type"].replace(" ", "_"))
+    except:
+        parser = selector.generic_parser
     parsed_plan = parser(plan, start)
     return parsed_plan
 
-def get_conjuction(start):
+CONJUNCTION_LIST = ["Next, ", "After that, ", "Then, ", "Subsequently, "]
+
+def get_conjuction(start=False):
     """ Get random conjuction """
     if start:
         return "First, "
-    CONJUNCTION_LIST=["Next, ", "After that, ", "Then, ", "Consequently, "]
     return random.choice(CONJUNCTION_LIST)
     
