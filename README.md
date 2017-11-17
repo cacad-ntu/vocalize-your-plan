@@ -16,6 +16,8 @@ Project 2 CZ4031 Nanyang Technological University. Script to generate and parse 
 - Install library from [requirements.txt](requirements.txt) (`pip install -r requirements.txt`)
 - Change [config.json](config.json) according to your setting.
 
+**NOTES**: If you want to use queries from this repo make use to initialize the database using [init.sql](data/init.sql).
+
 #### Command Line Interface (CLI)
 
 ##### Input: Query
