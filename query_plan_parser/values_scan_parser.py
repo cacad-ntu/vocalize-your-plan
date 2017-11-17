@@ -15,7 +15,7 @@ def values_scan_parser(plan, start=False):
 
 if __name__ == "__main__":
     test = '''
-   {                                             
+    {                                             
         "Node Type": "Values Scan",
         "Parallel Aware": false,   
         "Alias": "*VALUES*",       
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         "Total Cost": 0.04,        
         "Plan Rows": 3,            
         "Plan Width": 36           
-     }
+    }
     '''
     test_plan = json.loads(test)
     print(values_scan_parser(test_plan, start=True))

@@ -7,12 +7,10 @@ import json
 import query_plan_parser.parser
 
 def materialize_parser(plan, start=False):
-
-    """initialize empty string"""
+    """ Materialize parser """
     result = ""
 
-
-    """Get the text of it's child before if exists"""
+    # Get the text of it's child before if exists
     if "Plans" in plan:
         for child in plan["Plans"]:
             temp = query_plan_parser.parser.parse_plan(child, start)
@@ -20,8 +18,7 @@ def materialize_parser(plan, start=False):
             if start:
                 start = False
 
-
-    """Parse the materialize"""
+    #Parse the materialize
     if plan["Node Type"] == "Materialize":
         result += query_plan_parser.parser.get_conjuction(start)
         result += "the results are stored in memory for faster access. "
