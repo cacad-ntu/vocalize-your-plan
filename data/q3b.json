@@ -1,37 +1,37 @@
 {
-    "Startup Cost": 0.43,
+    "Node Type": "Nested Loop",
     "Parallel Aware": false,
+    "Join Type": "Semi",
+    "Startup Cost": 0.43,
+    "Total Cost": 18484.88,
+    "Plan Rows": 1,
+    "Plan Width": 106,
     "Plans": [
         {
-            "Filter": "((year = 2015) AND ((title_abbrev)::text = 'wasa'::text))",
-            "Startup Cost": 0.0,
-            "Parallel Aware": false,
             "Node Type": "Seq Scan",
-            "Plan Width": 100,
-            "Plan Rows": 9,
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
             "Relation Name": "publication",
-            "Total Cost": 18471.99,
             "Alias": "publication",
-            "Parent Relationship": "Outer"
+            "Startup Cost": 0.0,
+            "Total Cost": 18400.83,
+            "Plan Rows": 9,
+            "Plan Width": 106,
+            "Filter": "((year = 2015) AND ((title_abbrev)::text = 'wasa'::text))"
         },
         {
-            "Parallel Aware": false,
             "Node Type": "Index Only Scan",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": false,
             "Scan Direction": "Forward",
-            "Plan Width": 23,
-            "Alias": "pub_auth",
             "Index Name": "pub_auth_pkey",
+            "Relation Name": "pub_auth",
+            "Alias": "pub_auth",
             "Startup Cost": 0.43,
             "Total Cost": 8.45,
             "Plan Rows": 1,
-            "Relation Name": "pub_auth",
-            "Index Cond": "((pub_key = (publication.pub_key)::text) AND (author = 'Hongli Xu'::text))",
-            "Parent Relationship": "Inner"
+            "Plan Width": 23,
+            "Index Cond": "((pub_key = (publication.pub_key)::text) AND (author = 'Hongli Xu'::text))"
         }
-    ],
-    "Plan Rows": 1,
-    "Join Type": "Semi",
-    "Node Type": "Nested Loop",
-    "Total Cost": 18556.03,
-    "Plan Width": 100
+    ]
 }

@@ -1,38 +1,38 @@
 {
-    "Startup Cost": 0.42,
+    "Node Type": "Nested Loop",
     "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 0.42,
+    "Total Cost": 28024.04,
+    "Plan Rows": 1,
+    "Plan Width": 106,
     "Plans": [
         {
-            "Filter": "((author)::text = 'Hongli Xu'::text)",
-            "Startup Cost": 0.0,
-            "Parallel Aware": false,
             "Node Type": "Seq Scan",
-            "Plan Width": 23,
-            "Plan Rows": 5,
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
             "Relation Name": "pub_auth",
-            "Total Cost": 27889.54,
             "Alias": "pub_auth",
-            "Parent Relationship": "Outer"
+            "Startup Cost": 0.0,
+            "Total Cost": 27981.76,
+            "Plan Rows": 5,
+            "Plan Width": 23,
+            "Filter": "((author)::text = 'Hongli Xu'::text)"
         },
         {
-            "Filter": "(year = 2015)",
-            "Parallel Aware": false,
             "Node Type": "Index Scan",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": false,
             "Scan Direction": "Forward",
-            "Plan Width": 100,
-            "Alias": "publication",
             "Index Name": "publication_pkey",
+            "Relation Name": "publication",
+            "Alias": "publication",
             "Startup Cost": 0.42,
             "Total Cost": 8.45,
             "Plan Rows": 1,
-            "Relation Name": "publication",
+            "Plan Width": 106,
             "Index Cond": "((pub_key)::text = (pub_auth.pub_key)::text)",
-            "Parent Relationship": "Inner"
+            "Filter": "(year = 2015)"
         }
-    ],
-    "Plan Rows": 1,
-    "Join Type": "Inner",
-    "Node Type": "Nested Loop",
-    "Total Cost": 27931.81,
-    "Plan Width": 100
+    ]
 }
