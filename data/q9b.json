@@ -1,0 +1,100 @@
+{
+    "Node Type": "Aggregate",
+    "Strategy": "Hashed",
+    "Partial Mode": "Simple",
+    "Parallel Aware": false,
+    "Startup Cost": 40297.34,
+    "Total Cost": 40494.72,
+    "Plan Rows": 19738,
+    "Plan Width": 23,
+    "Group Key": [
+        "b.author"
+    ],
+    "Plans": [
+        {
+            "Node Type": "Nested Loop",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Join Type": "Inner",
+            "Startup Cost": 16963.82,
+            "Total Cost": 40198.65,
+            "Plan Rows": 19738,
+            "Plan Width": 15,
+            "Plans": [
+                {
+                    "Node Type": "Hash Join",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Join Type": "Semi",
+                    "Startup Cost": 16963.39,
+                    "Total Cost": 34094.11,
+                    "Plan Rows": 8582,
+                    "Plan Width": 22,
+                    "Hash Cond": "(a.year = (min(publication.year)))",
+                    "Plans": [
+                        {
+                            "Node Type": "Seq Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Relation Name": "publication",
+                            "Alias": "a",
+                            "Startup Cost": 0.0,
+                            "Total Cost": 15525.89,
+                            "Plan Rows": 574989,
+                            "Plan Width": 26
+                        },
+                        {
+                            "Node Type": "Hash",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Startup Cost": 16963.38,
+                            "Total Cost": 16963.38,
+                            "Plan Rows": 1,
+                            "Plan Width": 4,
+                            "Plans": [
+                                {
+                                    "Node Type": "Aggregate",
+                                    "Strategy": "Plain",
+                                    "Partial Mode": "Simple",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Startup Cost": 16963.36,
+                                    "Total Cost": 16963.37,
+                                    "Plan Rows": 1,
+                                    "Plan Width": 4,
+                                    "Plans": [
+                                        {
+                                            "Node Type": "Seq Scan",
+                                            "Parent Relationship": "Outer",
+                                            "Parallel Aware": false,
+                                            "Relation Name": "publication",
+                                            "Alias": "publication",
+                                            "Startup Cost": 0.0,
+                                            "Total Cost": 15525.89,
+                                            "Plan Rows": 574989,
+                                            "Plan Width": 4
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Node Type": "Index Only Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "pub_auth_pkey",
+                    "Relation Name": "pub_auth",
+                    "Alias": "b",
+                    "Startup Cost": 0.43,
+                    "Total Cost": 0.67,
+                    "Plan Rows": 4,
+                    "Plan Width": 38,
+                    "Index Cond": "(pub_key = (a.pub_key)::text)"
+                }
+            ]
+        }
+    ]
+}
