@@ -1,0 +1,194 @@
+{
+    "Node Type": "Aggregate",
+    "Strategy": "Hashed",
+    "Partial Mode": "Simple",
+    "Parallel Aware": false,
+    "Startup Cost": 55850.7,
+    "Total Cost": 56274.91,
+    "Plan Rows": 42421,
+    "Plan Width": 23,
+    "Group Key": [
+        "a.author"
+    ],
+    "Filter": "(count(a.author) = $2)",
+    "Plans": [
+        {
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
+            "Partial Mode": "Simple",
+            "Parent Relationship": "InitPlan",
+            "Subplan Name": "InitPlan 1 (returns $2)",
+            "Parallel Aware": false,
+            "Startup Cost": 56699.12,
+            "Total Cost": 56699.13,
+            "Plan Rows": 1,
+            "Plan Width": 8,
+            "Plans": [
+                {
+                    "Node Type": "Aggregate",
+                    "Strategy": "Hashed",
+                    "Partial Mode": "Simple",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Startup Cost": 55744.65,
+                    "Total Cost": 56168.86,
+                    "Plan Rows": 42421,
+                    "Plan Width": 23,
+                    "Group Key": [
+                        "a_1.author"
+                    ],
+                    "Plans": [
+                        {
+                            "Node Type": "Nested Loop",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Join Type": "Inner",
+                            "Startup Cost": 21309.01,
+                            "Total Cost": 55532.55,
+                            "Plan Rows": 42421,
+                            "Plan Width": 15,
+                            "Plans": [
+                                {
+                                    "Node Type": "Hash Join",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Join Type": "Semi",
+                                    "Startup Cost": 21308.58,
+                                    "Total Cost": 49562.25,
+                                    "Plan Rows": 9582,
+                                    "Plan Width": 60,
+                                    "Hash Cond": "((a_1.pub_key)::text = (publication_1.pub_key)::text)",
+                                    "Plans": [
+                                        {
+                                            "Node Type": "Seq Scan",
+                                            "Parent Relationship": "Outer",
+                                            "Parallel Aware": false,
+                                            "Relation Name": "pub_auth",
+                                            "Alias": "a_1",
+                                            "Startup Cost": 0.0,
+                                            "Total Cost": 24675.61,
+                                            "Plan Rows": 1322461,
+                                            "Plan Width": 38
+                                        },
+                                        {
+                                            "Node Type": "Hash",
+                                            "Parent Relationship": "Inner",
+                                            "Parallel Aware": false,
+                                            "Startup Cost": 21275.78,
+                                            "Total Cost": 21275.78,
+                                            "Plan Rows": 2624,
+                                            "Plan Width": 22,
+                                            "Plans": [
+                                                {
+                                                    "Node Type": "Seq Scan",
+                                                    "Parent Relationship": "Outer",
+                                                    "Parallel Aware": false,
+                                                    "Relation Name": "publication",
+                                                    "Alias": "publication_1",
+                                                    "Startup Cost": 0.0,
+                                                    "Total Cost": 21275.78,
+                                                    "Plan Rows": 2624,
+                                                    "Plan Width": 22,
+                                                    "Filter": "((((pub_class)::text = 'inproceedings'::text) OR ((pub_class)::text = 'article'::text)) AND (lower((title)::text) ~~ '%data%'::text))"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Node Type": "Index Only Scan",
+                                    "Parent Relationship": "Inner",
+                                    "Parallel Aware": false,
+                                    "Scan Direction": "Forward",
+                                    "Index Name": "pub_auth_pkey",
+                                    "Relation Name": "pub_auth",
+                                    "Alias": "b_1",
+                                    "Startup Cost": 0.43,
+                                    "Total Cost": 0.58,
+                                    "Plan Rows": 4,
+                                    "Plan Width": 38,
+                                    "Index Cond": "(pub_key = (a_1.pub_key)::text)",
+                                    "Filter": "((a_1.author)::text <> (author)::text)"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Node Type": "Nested Loop",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Join Type": "Inner",
+            "Startup Cost": 21309.01,
+            "Total Cost": 55532.55,
+            "Plan Rows": 42421,
+            "Plan Width": 15,
+            "Plans": [
+                {
+                    "Node Type": "Hash Join",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Join Type": "Semi",
+                    "Startup Cost": 21308.58,
+                    "Total Cost": 49562.25,
+                    "Plan Rows": 9582,
+                    "Plan Width": 60,
+                    "Hash Cond": "((a.pub_key)::text = (publication.pub_key)::text)",
+                    "Plans": [
+                        {
+                            "Node Type": "Seq Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Relation Name": "pub_auth",
+                            "Alias": "a",
+                            "Startup Cost": 0.0,
+                            "Total Cost": 24675.61,
+                            "Plan Rows": 1322461,
+                            "Plan Width": 38
+                        },
+                        {
+                            "Node Type": "Hash",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Startup Cost": 21275.78,
+                            "Total Cost": 21275.78,
+                            "Plan Rows": 2624,
+                            "Plan Width": 22,
+                            "Plans": [
+                                {
+                                    "Node Type": "Seq Scan",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Relation Name": "publication",
+                                    "Alias": "publication",
+                                    "Startup Cost": 0.0,
+                                    "Total Cost": 21275.78,
+                                    "Plan Rows": 2624,
+                                    "Plan Width": 22,
+                                    "Filter": "((((pub_class)::text = 'inproceedings'::text) OR ((pub_class)::text = 'article'::text)) AND (lower((title)::text) ~~ '%data%'::text))"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Node Type": "Index Only Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "pub_auth_pkey",
+                    "Relation Name": "pub_auth",
+                    "Alias": "b",
+                    "Startup Cost": 0.43,
+                    "Total Cost": 0.58,
+                    "Plan Rows": 4,
+                    "Plan Width": 38,
+                    "Index Cond": "(pub_key = (a.pub_key)::text)",
+                    "Filter": "((a.author)::text <> (author)::text)"
+                }
+            ]
+        }
+    ]
+}

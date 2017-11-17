@@ -1,0 +1,92 @@
+{
+    "Node Type": "Limit",
+    "Parallel Aware": false,
+    "Startup Cost": 37930.05,
+    "Total Cost": 37930.08,
+    "Plan Rows": 10,
+    "Plan Width": 23,
+    "Plans": [
+        {
+            "Node Type": "Sort",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Startup Cost": 37930.05,
+            "Total Cost": 37935.39,
+            "Plan Rows": 2137,
+            "Plan Width": 23,
+            "Sort Key": [
+                "(count(a.author)) DESC"
+            ],
+            "Plans": [
+                {
+                    "Node Type": "Aggregate",
+                    "Strategy": "Sorted",
+                    "Partial Mode": "Simple",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Startup Cost": 37846.48,
+                    "Total Cost": 37883.87,
+                    "Plan Rows": 2137,
+                    "Plan Width": 23,
+                    "Group Key": [
+                        "a.author"
+                    ],
+                    "Plans": [
+                        {
+                            "Node Type": "Sort",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Startup Cost": 37846.48,
+                            "Total Cost": 37851.82,
+                            "Plan Rows": 2137,
+                            "Plan Width": 15,
+                            "Sort Key": [
+                                "a.author"
+                            ],
+                            "Plans": [
+                                {
+                                    "Node Type": "Nested Loop",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Join Type": "Inner",
+                                    "Startup Cost": 0.43,
+                                    "Total Cost": 37728.28,
+                                    "Plan Rows": 2137,
+                                    "Plan Width": 15,
+                                    "Plans": [
+                                        {
+                                            "Node Type": "Seq Scan",
+                                            "Parent Relationship": "Outer",
+                                            "Parallel Aware": false,
+                                            "Relation Name": "publication",
+                                            "Alias": "b",
+                                            "Startup Cost": 0.0,
+                                            "Total Cost": 22713.25,
+                                            "Plan Rows": 929,
+                                            "Plan Width": 22,
+                                            "Filter": "((year > 2012) AND (((pub_class)::text = 'inproceedings'::text) OR ((pub_class)::text = 'article'::text)) AND (lower((title)::text) ~~ '%data%'::text))"
+                                        },
+                                        {
+                                            "Node Type": "Index Only Scan",
+                                            "Parent Relationship": "Inner",
+                                            "Parallel Aware": false,
+                                            "Scan Direction": "Forward",
+                                            "Index Name": "pub_auth_pkey",
+                                            "Relation Name": "pub_auth",
+                                            "Alias": "a",
+                                            "Startup Cost": 0.43,
+                                            "Total Cost": 16.12,
+                                            "Plan Rows": 4,
+                                            "Plan Width": 38,
+                                            "Index Cond": "(pub_key = (b.pub_key)::text)"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
