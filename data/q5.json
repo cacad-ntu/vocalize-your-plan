@@ -1,172 +1,172 @@
 {
-    "Startup Cost": 100162.99,
+    "Node Type": "Nested Loop",
     "Parallel Aware": false,
+    "Join Type": "Inner",
+    "Startup Cost": 99726.34,
+    "Total Cost": 99726.48,
+    "Plan Rows": 1,
+    "Plan Width": 40,
     "Plans": [
         {
-            "Startup Cost": 79948.53,
+            "Node Type": "Nested Loop",
+            "Parent Relationship": "Outer",
             "Parallel Aware": false,
+            "Join Type": "Inner",
+            "Startup Cost": 79597.71,
+            "Total Cost": 79597.82,
+            "Plan Rows": 1,
             "Plan Width": 32,
             "Plans": [
                 {
-                    "Startup Cost": 59836.6,
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
                     "Parallel Aware": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 59568.91,
+                    "Total Cost": 59568.99,
+                    "Plan Rows": 1,
                     "Plan Width": 24,
                     "Plans": [
                         {
-                            "Startup Cost": 39869.65,
+                            "Node Type": "Nested Loop",
+                            "Parent Relationship": "Outer",
                             "Parallel Aware": false,
+                            "Join Type": "Inner",
+                            "Startup Cost": 39691.18,
+                            "Total Cost": 39691.23,
+                            "Plan Rows": 1,
                             "Plan Width": 16,
                             "Plans": [
                                 {
-                                    "Startup Cost": 19931.45,
-                                    "Parallel Aware": false,
-                                    "Plan Width": 8,
+                                    "Node Type": "Aggregate",
+                                    "Strategy": "Plain",
                                     "Partial Mode": "Simple",
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
+                                    "Startup Cost": 19841.76,
+                                    "Total Cost": 19841.76,
                                     "Plan Rows": 1,
+                                    "Plan Width": 8,
                                     "Plans": [
                                         {
-                                            "Filter": "((year >= 1970) AND (year <= 1979) AND ((pub_class)::text = 'inproceedings'::text))",
-                                            "Startup Cost": 0.0,
-                                            "Parallel Aware": false,
                                             "Node Type": "Seq Scan",
-                                            "Plan Width": 21,
-                                            "Plan Rows": 1188,
+                                            "Parent Relationship": "Outer",
+                                            "Parallel Aware": false,
                                             "Relation Name": "publication",
-                                            "Total Cost": 19928.48,
                                             "Alias": "publication",
-                                            "Parent Relationship": "Outer"
+                                            "Startup Cost": 0.0,
+                                            "Total Cost": 19838.31,
+                                            "Plan Rows": 1379,
+                                            "Plan Width": 22,
+                                            "Filter": "((year >= 1970) AND (year <= 1979) AND ((pub_class)::text = 'inproceedings'::text))"
                                         }
-                                    ],
-                                    "Node Type": "Aggregate",
-                                    "Total Cost": 19931.46,
-                                    "Strategy": "Plain",
-                                    "Parent Relationship": "Outer"
+                                    ]
                                 },
                                 {
-                                    "Startup Cost": 19938.2,
-                                    "Parallel Aware": false,
-                                    "Plan Width": 8,
+                                    "Node Type": "Aggregate",
+                                    "Strategy": "Plain",
                                     "Partial Mode": "Simple",
+                                    "Parent Relationship": "Inner",
+                                    "Parallel Aware": false,
+                                    "Startup Cost": 19849.43,
+                                    "Total Cost": 19849.44,
                                     "Plan Rows": 1,
+                                    "Plan Width": 8,
                                     "Plans": [
                                         {
-                                            "Filter": "((year >= 1980) AND (year <= 1989) AND ((pub_class)::text = 'inproceedings'::text))",
-                                            "Startup Cost": 0.0,
-                                            "Parallel Aware": false,
                                             "Node Type": "Seq Scan",
-                                            "Plan Width": 21,
-                                            "Plan Rows": 3888,
+                                            "Parent Relationship": "Outer",
+                                            "Parallel Aware": false,
                                             "Relation Name": "publication",
-                                            "Total Cost": 19928.48,
                                             "Alias": "publication_1",
-                                            "Parent Relationship": "Outer"
+                                            "Startup Cost": 0.0,
+                                            "Total Cost": 19838.31,
+                                            "Plan Rows": 4447,
+                                            "Plan Width": 22,
+                                            "Filter": "((year >= 1980) AND (year <= 1989) AND ((pub_class)::text = 'inproceedings'::text))"
                                         }
-                                    ],
-                                    "Node Type": "Aggregate",
-                                    "Total Cost": 19938.21,
-                                    "Strategy": "Plain",
-                                    "Parent Relationship": "Inner"
+                                    ]
                                 }
-                            ],
-                            "Plan Rows": 1,
-                            "Join Type": "Inner",
-                            "Node Type": "Nested Loop",
-                            "Total Cost": 39869.7,
-                            "Parent Relationship": "Outer"
+                            ]
                         },
                         {
-                            "Startup Cost": 19966.94,
-                            "Parallel Aware": false,
-                            "Plan Width": 8,
+                            "Node Type": "Aggregate",
+                            "Strategy": "Plain",
                             "Partial Mode": "Simple",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Startup Cost": 19877.73,
+                            "Total Cost": 19877.74,
                             "Plan Rows": 1,
+                            "Plan Width": 8,
                             "Plans": [
                                 {
-                                    "Filter": "((year >= 1990) AND (year <= 1999) AND ((pub_class)::text = 'inproceedings'::text))",
-                                    "Startup Cost": 0.0,
-                                    "Parallel Aware": false,
                                     "Node Type": "Seq Scan",
-                                    "Plan Width": 21,
-                                    "Plan Rows": 15383,
+                                    "Parent Relationship": "Outer",
+                                    "Parallel Aware": false,
                                     "Relation Name": "publication",
-                                    "Total Cost": 19928.48,
                                     "Alias": "publication_2",
-                                    "Parent Relationship": "Outer"
+                                    "Startup Cost": 0.0,
+                                    "Total Cost": 19838.31,
+                                    "Plan Rows": 15767,
+                                    "Plan Width": 22,
+                                    "Filter": "((year >= 1990) AND (year <= 1999) AND ((pub_class)::text = 'inproceedings'::text))"
                                 }
-                            ],
-                            "Node Type": "Aggregate",
-                            "Total Cost": 19966.95,
-                            "Strategy": "Plain",
-                            "Parent Relationship": "Inner"
+                            ]
                         }
-                    ],
-                    "Plan Rows": 1,
-                    "Join Type": "Inner",
-                    "Node Type": "Nested Loop",
-                    "Total Cost": 59836.67,
-                    "Parent Relationship": "Outer"
+                    ]
                 },
                 {
-                    "Startup Cost": 20111.93,
-                    "Parallel Aware": false,
-                    "Plan Width": 8,
+                    "Node Type": "Aggregate",
+                    "Strategy": "Plain",
                     "Partial Mode": "Simple",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Startup Cost": 20028.81,
+                    "Total Cost": 20028.82,
                     "Plan Rows": 1,
+                    "Plan Width": 8,
                     "Plans": [
                         {
-                            "Filter": "((year >= 2000) AND (year <= 2009) AND ((pub_class)::text = 'inproceedings'::text))",
-                            "Startup Cost": 0.0,
-                            "Parallel Aware": false,
                             "Node Type": "Seq Scan",
-                            "Plan Width": 21,
-                            "Plan Rows": 73380,
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
                             "Relation Name": "publication",
-                            "Total Cost": 19928.48,
                             "Alias": "publication_3",
-                            "Parent Relationship": "Outer"
+                            "Startup Cost": 0.0,
+                            "Total Cost": 19838.31,
+                            "Plan Rows": 76200,
+                            "Plan Width": 22,
+                            "Filter": "((year >= 2000) AND (year <= 2009) AND ((pub_class)::text = 'inproceedings'::text))"
                         }
-                    ],
-                    "Node Type": "Aggregate",
-                    "Total Cost": 20111.94,
-                    "Strategy": "Plain",
-                    "Parent Relationship": "Inner"
+                    ]
                 }
-            ],
-            "Plan Rows": 1,
-            "Join Type": "Inner",
-            "Node Type": "Nested Loop",
-            "Total Cost": 79948.64,
-            "Parent Relationship": "Outer"
+            ]
         },
         {
-            "Startup Cost": 20214.46,
-            "Parallel Aware": false,
-            "Plan Width": 8,
+            "Node Type": "Aggregate",
+            "Strategy": "Plain",
             "Partial Mode": "Simple",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": false,
+            "Startup Cost": 20128.63,
+            "Total Cost": 20128.64,
             "Plan Rows": 1,
+            "Plan Width": 8,
             "Plans": [
                 {
-                    "Filter": "((year >= 2010) AND (year <= 2019) AND ((pub_class)::text = 'inproceedings'::text))",
-                    "Startup Cost": 0.0,
-                    "Parallel Aware": false,
                     "Node Type": "Seq Scan",
-                    "Plan Width": 21,
-                    "Plan Rows": 114393,
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
                     "Relation Name": "publication",
-                    "Total Cost": 19928.48,
                     "Alias": "publication_4",
-                    "Parent Relationship": "Outer"
+                    "Startup Cost": 0.0,
+                    "Total Cost": 19838.31,
+                    "Plan Rows": 116127,
+                    "Plan Width": 22,
+                    "Filter": "((year >= 2010) AND (year <= 2019) AND ((pub_class)::text = 'inproceedings'::text))"
                 }
-            ],
-            "Node Type": "Aggregate",
-            "Total Cost": 20214.47,
-            "Strategy": "Plain",
-            "Parent Relationship": "Inner"
+            ]
         }
-    ],
-    "Plan Rows": 1,
-    "Join Type": "Inner",
-    "Node Type": "Nested Loop",
-    "Total Cost": 100163.13,
-    "Plan Width": 40
+    ]
 }

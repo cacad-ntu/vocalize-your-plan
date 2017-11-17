@@ -1,45 +1,45 @@
 {
-    "Startup Cost": 18651.67,
+    "Node Type": "Aggregate",
+    "Strategy": "Hashed",
+    "Partial Mode": "Simple",
     "Parallel Aware": false,
+    "Startup Cost": 18582.36,
+    "Total Cost": 18680.99,
+    "Plan Rows": 7890,
+    "Plan Width": 41,
     "Group Key": [
         "upper((title_abbrev)::text)"
     ],
-    "Partial Mode": "Simple",
-    "Plan Rows": 7814,
     "Plans": [
         {
-            "Filter": "(count(title_abbrev) > 200)",
-            "Parallel Aware": false,
-            "Plans": [
-                {
-                    "Filter": "(((pub_class)::text = 'inproceedings'::text) AND (month = 7))",
-                    "Startup Cost": 0.0,
-                    "Parallel Aware": false,
-                    "Node Type": "Seq Scan",
-                    "Plan Width": 8,
-                    "Plan Rows": 8330,
-                    "Relation Name": "publication",
-                    "Total Cost": 18471.99,
-                    "Alias": "p",
-                    "Parent Relationship": "Outer"
-                }
-            ],
-            "Plan Rows": 7814,
-            "Plan Width": 40,
-            "Strategy": "Hashed",
-            "Startup Cost": 18534.46,
-            "Total Cost": 18632.14,
-            "Partial Mode": "Simple",
             "Node Type": "Aggregate",
+            "Strategy": "Hashed",
+            "Partial Mode": "Simple",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": false,
+            "Startup Cost": 18464.01,
+            "Total Cost": 18562.64,
+            "Plan Rows": 7890,
+            "Plan Width": 41,
             "Group Key": [
                 "title_abbrev",
                 "year"
             ],
-            "Parent Relationship": "Outer"
+            "Filter": "(count(title_abbrev) > 200)",
+            "Plans": [
+                {
+                    "Node Type": "Seq Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Relation Name": "publication",
+                    "Alias": "p",
+                    "Startup Cost": 0.0,
+                    "Total Cost": 18400.83,
+                    "Plan Rows": 8424,
+                    "Plan Width": 9,
+                    "Filter": "(((pub_class)::text = 'inproceedings'::text) AND (month = 7))"
+                }
+            ]
         }
-    ],
-    "Node Type": "Aggregate",
-    "Total Cost": 18749.35,
-    "Strategy": "Hashed",
-    "Plan Width": 40
+    ]
 }
