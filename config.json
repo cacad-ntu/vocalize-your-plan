@@ -1,16 +1,17 @@
 {
     "db":{
         "host": "localhost",
+        "port": "5432",
         "database": "postgres",
         "username": "postgres",
         "password": "admin"   
     },
-    "app":{
+    "cli":{
         "desc_plan": true,
         "voice_plan": true,
         "debug_plan": false
     },
     "log":{
-        "log_path": "data/parser.log"
+        "log_path": "data/"
     }
 }

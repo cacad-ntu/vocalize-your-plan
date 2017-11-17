@@ -12,11 +12,12 @@ from voice_the_string.vocalize import Vocalizator
 class Explain:
     """ Class to explain query """
     def __init__(
-            self, host, dbname, user, password,
+            self, host, port, dbname, user, password,
             desc=True, voice=False, debug=False
         ):
         """ init Explain """
-        conn_string = "host='%s' dbname='%s' user='%s' password='%s'"%(host, dbname, user, password)
+        conn_string = "host='%s' port='%s' dbname='%s' user='%s' password='%s'"%(
+            host, port, dbname, user, password)
         self.conn = psycopg2.connect(conn_string)
         self.cursor = self.conn.cursor()
         logging.info("Connected to database: " + conn_string)
@@ -26,40 +27,71 @@ class Explain:
         self.debug = debug
 
         self.query = ""
+        self.query_plan = {}
+        self.parsed_plan = ""
 
         self.vocalizator = Vocalizator()
 
-    def explain(self, query="", ret=False):
+
+    def explain(self, query=None):
         """ explain query """
-        if query != "":
+        if query:
             self.query = query
 
-        logging.info("Executing: " + self.query)
-        self.cursor.execute("EXPLAIN (FORMAT JSON) " + self.query)
-        plan = self.cursor.fetchall()
+        logging.info("Generating query plan for: " + self.query)
+        try:
+            self.cursor.execute("EXPLAIN (FORMAT JSON) " + self.query)
+            plan = self.cursor.fetchall()
+            self.query_plan = plan[0][0][0]["Plan"]
+        except:
+            logging.error("Failed to generate query plan execution!")
+            self.query_plan = {}
+            self.parsed_plan = "Failed to generate query plan execution!"
+            raise
+        finally:
+            logging.info("Generated query plan: " + json.dumps(self.query_plan, indent=4))
 
-        parsed_plan = parse_plan(plan[0][0][0]["Plan"], start=True)
+        return self.query_plan
 
-        if self.debug:
-            print(json.dumps(plan[0][0][0]["Plan"], indent=4))
-        if self.desc:
-            print(parsed_plan)
-        if self.voice:
-            self.vocalizator.voice(parsed_plan)
 
-        logging.info("Parsed plan: " + parsed_plan)
+    def parse(self, query_plan=None):
+        """ Parse query plan """
+        if query_plan:
+            self.query_plan = query_plan
 
-        if ret:
-            return parsed_plan
+        logging.info("Parsing plan for: " + json.dumps(self.query_plan, indent=4))
+        try:
+            self.parsed_plan = parse_plan(self.query_plan, start=True)
+        except:
+            logging.error("Failed to parse query plan execution!")
+            self.parsed_plan = "Failed to parse query plan execution!"
+            raise
+        finally:
+            logging.info("Parsed plan: " + self.parsed_plan)
+
+        return self.parsed_plan
+
 
     def loop_explain(self):
         """ continuously explain queries """
+        print("postgres=# Please input query (end with ';')")
         next_line = ""
         self.query = ""
         while next_line.strip().lower() != "quit":
             next_line = input("postgres=# ")
             self.query += "\n" + next_line.strip()
             if self.query[-1] == ";":
-                self.explain()
-                self.query = ""
+                try:
+                    self.explain()
+                    self.parse()
+                except Exception as exception:
+                    logging.error("Error on Explain.explain(): " + str(exception))
+                finally:
+                    if self.debug:
+                        print(json.dumps(self.query_plan, indent=4))
+                    if self.desc:
+                        print(self.parsed_plan)
+                    if self.voice:
+                        self.vocalizator.voice(self.parsed_plan)
+                    self.query = ""
         
