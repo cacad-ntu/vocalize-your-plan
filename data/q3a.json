@@ -1,0 +1,38 @@
+{
+    "Startup Cost": 0.42,
+    "Parallel Aware": false,
+    "Plans": [
+        {
+            "Filter": "((author)::text = 'Hongli Xu'::text)",
+            "Startup Cost": 0.0,
+            "Parallel Aware": false,
+            "Node Type": "Seq Scan",
+            "Plan Width": 23,
+            "Plan Rows": 5,
+            "Relation Name": "pub_auth",
+            "Total Cost": 27889.54,
+            "Alias": "pub_auth",
+            "Parent Relationship": "Outer"
+        },
+        {
+            "Filter": "(year = 2015)",
+            "Parallel Aware": false,
+            "Node Type": "Index Scan",
+            "Scan Direction": "Forward",
+            "Plan Width": 100,
+            "Alias": "publication",
+            "Index Name": "publication_pkey",
+            "Startup Cost": 0.42,
+            "Total Cost": 8.45,
+            "Plan Rows": 1,
+            "Relation Name": "publication",
+            "Index Cond": "((pub_key)::text = (pub_auth.pub_key)::text)",
+            "Parent Relationship": "Inner"
+        }
+    ],
+    "Plan Rows": 1,
+    "Join Type": "Inner",
+    "Node Type": "Nested Loop",
+    "Total Cost": 27931.81,
+    "Plan Width": 100
+}

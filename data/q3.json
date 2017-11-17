@@ -1,0 +1,80 @@
+{
+    "Startup Cost": 19983.66,
+    "Parallel Aware": false,
+    "Plan Rows": 7,
+    "Plans": [
+        {
+            "Filter": "(count(b.author) > 1)",
+            "Parallel Aware": false,
+            "Plans": [
+                {
+                    "Startup Cost": 19983.66,
+                    "Parallel Aware": false,
+                    "Plan Width": 15,
+                    "Plan Rows": 7,
+                    "Plans": [
+                        {
+                            "Startup Cost": 0.43,
+                            "Parallel Aware": false,
+                            "Plan Width": 15,
+                            "Plans": [
+                                {
+                                    "Filter": "((year = 2015) AND ((pub_type)::text = 'conf'::text) AND ((title_abbrev)::text = 'wasa'::text))",
+                                    "Startup Cost": 0.0,
+                                    "Parallel Aware": false,
+                                    "Node Type": "Seq Scan",
+                                    "Plan Width": 21,
+                                    "Plan Rows": 3,
+                                    "Relation Name": "publication",
+                                    "Total Cost": 19928.48,
+                                    "Alias": "a",
+                                    "Parent Relationship": "Outer"
+                                },
+                                {
+                                    "Parallel Aware": false,
+                                    "Node Type": "Index Only Scan",
+                                    "Scan Direction": "Forward",
+                                    "Plan Width": 38,
+                                    "Alias": "b",
+                                    "Index Name": "pub_auth_pkey",
+                                    "Startup Cost": 0.43,
+                                    "Total Cost": 18.32,
+                                    "Plan Rows": 4,
+                                    "Relation Name": "pub_auth",
+                                    "Index Cond": "(pub_key = (a.pub_key)::text)",
+                                    "Parent Relationship": "Inner"
+                                }
+                            ],
+                            "Plan Rows": 7,
+                            "Join Type": "Inner",
+                            "Node Type": "Nested Loop",
+                            "Total Cost": 19983.56,
+                            "Parent Relationship": "Outer"
+                        }
+                    ],
+                    "Node Type": "Sort",
+                    "Sort Key": [
+                        "b.author"
+                    ],
+                    "Total Cost": 19983.68,
+                    "Parent Relationship": "Outer"
+                }
+            ],
+            "Plan Rows": 7,
+            "Plan Width": 23,
+            "Strategy": "Sorted",
+            "Startup Cost": 19983.66,
+            "Total Cost": 19983.78,
+            "Partial Mode": "Simple",
+            "Node Type": "Aggregate",
+            "Group Key": [
+                "b.author"
+            ],
+            "Parent Relationship": "Subquery"
+        }
+    ],
+    "Node Type": "Subquery Scan",
+    "Total Cost": 19983.85,
+    "Alias": "tmp",
+    "Plan Width": 15
+}
