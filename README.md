@@ -2,7 +2,7 @@
 
 Project 2 CZ4031 Nanyang Technological University. Script to generate and parse query execution plan from a given query or query plan (in JSON format).
 
-## Get Started
+## Getting Started
 
 ### Requirements
 
@@ -39,6 +39,12 @@ Project 2 CZ4031 Nanyang Technological University. Script to generate and parse 
 - To generate query plan: Enter query in `Query` section and press `Explain`
 - To parse query plan: Enter query plan in `Query Plan` section or directly press `Parse`
 - To vocalize query plan: Enter parsed query plan in `Parsed Query Plan` section and press `Vocalize`
+
+### Test
+
+#### Parser test
+
+To test the each individual parser. Just move to `query_plan_parser/` and execute `python [parser_name].py`. It will run unit test in each parser.
 
 ## Source
 
