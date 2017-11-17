@@ -21,6 +21,8 @@ import query_plan_parser.cte_scan_parser as cte_scan
 import query_plan_parser.append_parser as append
 import query_plan_parser.materialize_parser as materialize
 import query_plan_parser.subquery_scan_parser as subquery_scan
+import query_plan_parser.setop_parser as setop
+import query_plan_parser.group_parser as group
 
 class ParserSelector:
     """ ParserSelectorClass """
@@ -45,6 +47,8 @@ class ParserSelector:
         self.Append = append.append_parser
         self.Materialize = materialize.materialize_parser
         self.Subquery_Scan = subquery_scan.subquery_scan_parser
+        self.SetOp = setop.setop_parser
+        self.Group = group.group_parser
 
 
 def parse_plan(plan, start=False):
@@ -54,7 +58,8 @@ def parse_plan(plan, start=False):
         parser = getattr(selector, plan["Node Type"].replace(" ", "_"))
     except:
         parser = selector.generic_parser
-    parsed_plan = parser(plan, start)
+    parsed_plan = initplan(plan, start)
+    parsed_plan += parser(plan, start)
     return parsed_plan
 
 CONJUNCTION_LIST = ["Next, ", "After that, ", "Then, ", "Subsequently, "]
@@ -67,10 +72,12 @@ def get_conjuction(start=False):
 
 def initplan(plan, start=False):
     """ Check for InitPlan """
-    result = str(plan["Subplan Name"])
+    result = ""
  
     if "Parent Relationship" in plan:
         if plan["Parent Relationship"] == "InitPlan":
             result = get_conjuction(start)
-            result += "The " + plan["Node Type"] +  " node and its subsequent child node is executed first since the result from this node needs to be calculated first and it is only calculated once for the whole query."
+            result += "the " + plan["Node Type"] +  " node and its subsequent child node is executed first since the result from this node needs to be calculated first and it is only calculated once for the whole query. "
+            result += "The plan is as follows:"
+            
     return result

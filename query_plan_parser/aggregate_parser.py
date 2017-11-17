@@ -7,10 +7,10 @@ import query_plan_parser.parser
 
 def aggregate_parser(plan, start=False):
     """ Parser for Aggregate node type """
-    parsed_plan = query_plan_parser.parser.initplan(plan, start)
+    # parsed_plan = query_plan_parser.parser.initplan(plan, start)
 
     if plan["Strategy"] == "Sorted":
-        parsed_plan += query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
+        parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
 
         parsed_plan += " " + query_plan_parser.parser.get_conjuction()
 

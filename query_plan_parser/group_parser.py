@@ -12,7 +12,7 @@ def group_parser(plan, start=False):
     parsed_plan += " " + query_plan_parser.parser.get_conjuction()
     if len(plan["Group Key"]) == 1:
         parsed_plan += "the result from the previous operation is grouped together using the key "
-        parsed_plan += plan["Group Key"][0].replace("::text", "")
+        parsed_plan += plan["Group Key"][0].replace("::text", "") + "."
     else:
         parsed_plan += "the result from the previous operation is grouped together using the keys "
         for i in plan["Group Key"][:-1]:
