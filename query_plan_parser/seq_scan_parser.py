@@ -21,11 +21,11 @@ def seq_scan_parser(plan, start=False):
         sentence += " This is bounded by the condition "
         sentence += plan['Filter'].replace("::text", "")
         sentence += "."
-        
+
     return sentence
 
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                
         "Node Type": "Seq Scan",       
         "Parent Relationship": "Outer",
@@ -38,5 +38,5 @@ if __name__ == "__main__":
         "Plan Width": 0                
     }
     '''
-    test_plan = json.loads(test)
-    print(seq_scan_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(seq_scan_parser(JSON_PLAN, start=True))

@@ -16,13 +16,14 @@ def subquery_scan_parser(plan, start=False):
                 start = False
 
     result += query_plan_parser.parser.get_conjuction(start)
-    result += 'Subquery Scan is performed on the result from the previous operations and output it without any changes '
+    result += 'Subquery Scan is performed on the result from '
+    result += 'the previous operations and output it without any changes '
     result += '(the purpose of Subquery scan is mainly for internal bookkeeping).'
 
     return result
 
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                                   
         "Node Type": "Subquery Scan",                                     
         "Parent Relationship": "Outer",                                   
@@ -40,5 +41,5 @@ if __name__ == "__main__":
         ]
     }
     '''
-    test_plan = json.loads(test)
-    print(subquery_scan_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(subquery_scan_parser(JSON_PLAN, start=True))

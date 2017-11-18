@@ -7,7 +7,7 @@ import json
 import query_plan_parser.parser
 
 def append_parser(plan, start=False):
-    """initialize empty string"""
+    """ Append Parser """
     result = ""
 
     # Get the text of it's child before if exists
@@ -15,7 +15,7 @@ def append_parser(plan, start=False):
         for child in plan["Plans"]:
             temp = query_plan_parser.parser.parse_plan(child, start)
             if start:
-                start=False
+                start = False
             result += temp + " "
 
     #Parse the values scan
@@ -25,8 +25,9 @@ def append_parser(plan, start=False):
 
     return result
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                             
        "Node Type": "Append",              
        "Parallel Aware": false,            
@@ -35,30 +36,30 @@ if __name__ == "__main__":
        "Plan Rows": 1902002,               
        "Plan Width": 22,                   
        "Plans": [                          
-         {                                 
-           "Node Type": "Seq Scan",        
-           "Parent Relationship": "Member",
-           "Parallel Aware": false,        
-           "Relation Name": "publication", 
-           "Alias": "publication",         
-           "Startup Cost": 0.00,           
-           "Total Cost": 15558.99,         
-           "Plan Rows": 582599,            
-           "Plan Width": 21                
-         },                                
-         {                                 
-           "Node Type": "Seq Scan",        
-           "Parent Relationship": "Member",
-           "Parallel Aware": false,        
-           "Relation Name": "pub_auth",    
-           "Alias": "pub_auth",            
-           "Startup Cost": 0.00,           
-           "Total Cost": 24591.03,         
-           "Plan Rows": 1319403,           
-           "Plan Width": 23                
-         }                                 
-       ]                                   
-     }
+            {                                 
+                "Node Type": "Seq Scan",        
+                "Parent Relationship": "Member",
+                "Parallel Aware": false,        
+                "Relation Name": "publication", 
+                "Alias": "publication",         
+                "Startup Cost": 0.00,           
+                "Total Cost": 15558.99,         
+                "Plan Rows": 582599,            
+                "Plan Width": 21                
+            },                                
+            {                                 
+                "Node Type": "Seq Scan",        
+                "Parent Relationship": "Member",
+                "Parallel Aware": false,        
+                "Relation Name": "pub_auth",    
+                "Alias": "pub_auth",            
+                "Startup Cost": 0.00,           
+                "Total Cost": 24591.03,         
+                "Plan Rows": 1319403,           
+                "Plan Width": 23                
+            }                                 
+        ]                                   
+    }
     '''
-    test_plan = json.loads(test)
-    print(append_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(append_parser(JSON_PLAN, start=True))

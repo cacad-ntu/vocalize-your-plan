@@ -7,7 +7,7 @@ import json
 import query_plan_parser.parser
 
 def cte_scan_parser(plan, start=False):
-    """initialize empty string"""
+    """ CTE Scan parser """
     result = query_plan_parser.parser.get_conjuction(start)
 
     # Parse the values scan
@@ -23,8 +23,9 @@ def cte_scan_parser(plan, start=False):
 
     return result
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
    {                                             
        "Node Type": "CTE Scan",                  
         "Parent Relationship": "Outer",           
@@ -37,5 +38,5 @@ if __name__ == "__main__":
         "Plan Width": 218       
      }
     '''
-    test_plan = json.loads(test)
-    print(cte_scan_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(cte_scan_parser(JSON_PLAN, start=True))

@@ -33,7 +33,7 @@ def index_scan_parser(plan, start=False):
 
 
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                             
        "Node Type": "Index Scan",                          
        "Parallel Aware": false,                            
@@ -48,10 +48,10 @@ if __name__ == "__main__":
        "Index Cond": "((pub_key)::text = 'Saxena96'::text)"
     }
     '''
-    test_plan = json.loads(test)
-    print(index_scan_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(index_scan_parser(JSON_PLAN, start=True))
 
-    test = '''
+    PLAN2 = '''
     {                                             
        "Node Type": "Index Only Scan",                           
        "Parallel Aware": false,                                  
@@ -66,5 +66,5 @@ if __name__ == "__main__":
        "Index Cond": "(pub_key = 'journals/acta/Saxena96'::text)"
     }
     '''
-    test_plan = json.loads(test)
-    print(index_scan_parser(test_plan, start=True))
+    JSON_PLAN2 = json.loads(PLAN2)
+    print(index_scan_parser(JSON_PLAN2, start=True))

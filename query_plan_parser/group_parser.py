@@ -18,11 +18,12 @@ def group_parser(plan, start=False):
         for i in plan["Group Key"][:-1]:
             parsed_plan += i.replace("::text", "") + ", "
         parsed_plan += plan["Group Key"][-1].replace("::text", "") + "."
-    
+
     return parsed_plan
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                      
         "Node Type": "Group",                
         "Parent Relationship": "Outer",      
@@ -32,22 +33,23 @@ if __name__ == "__main__":
         "Plan Rows": 574989,                 
         "Plan Width": 106,                   
         "Group Key": ["pub_key", "year"],            
-        "Plans": [                           
-        {                                  
-            "Node Type": "Index Scan",       
-            "Parent Relationship": "Outer",  
-            "Parallel Aware": false,         
-            "Scan Direction": "Forward",     
-            "Index Name": "publication_pkey",
-            "Relation Name": "publication",  
-            "Alias": "publication",          
-            "Startup Cost": 0.42,            
-            "Total Cost": 59416.31,          
-            "Plan Rows": 574989,             
-               "Plan Width": 106                
-        }                                  
+        "Plans": 
+        [                           
+            {                                  
+                "Node Type": "Index Scan",       
+                "Parent Relationship": "Outer",  
+                "Parallel Aware": false,         
+                "Scan Direction": "Forward",     
+                "Index Name": "publication_pkey",
+                "Relation Name": "publication",  
+                "Alias": "publication",          
+                "Startup Cost": 0.42,            
+                "Total Cost": 59416.31,          
+                "Plan Rows": 574989,             
+                "Plan Width": 106                
+            }                                  
         ]                                    
     }
     '''
-    test_plan = json.loads(test)
-    print(group_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(group_parser(JSON_PLAN, start=True))

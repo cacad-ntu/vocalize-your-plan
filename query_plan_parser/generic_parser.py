@@ -14,8 +14,9 @@ def generic_parser(plan, start=False):
             parsed_plan += " " + query_plan_parser.parser.parse_plan(child)
     return parsed_plan
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                
         "Node Type": "Unrecognize",       
         "Parent Relationship": "Outer",
@@ -41,5 +42,5 @@ if __name__ == "__main__":
         ]       
     }
     '''
-    test_plan = json.loads(test)
-    print(generic_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(generic_parser(JSON_PLAN, start=True))

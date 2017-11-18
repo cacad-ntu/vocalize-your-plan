@@ -25,8 +25,9 @@ def materialize_parser(plan, start=False):
 
     return result
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                             
         "Node Type": "Materialize",                                        
         "Parent Relationship": "Inner",                                    
@@ -52,5 +53,5 @@ if __name__ == "__main__":
         ]
     }
     '''
-    test_plan = json.loads(test)
-    print(materialize_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(materialize_parser(JSON_PLAN, start=True))

@@ -14,29 +14,30 @@ def limit_parser(plan, start=False):
     parsed_plan += str(total_rows) + " entries."
     return parsed_plan
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                            
-       "Node Type": "Limit",              
-       "Parallel Aware": false,           
-       "Startup Cost": 0.00,              
-       "Total Cost": 0.27,                
-       "Plan Rows": 10,                   
-       "Plan Width": 106,                 
-       "Plans": [
-         {                                
-           "Node Type": "Seq Scan",       
-           "Parent Relationship": "Outer",
-           "Parallel Aware": false,       
-           "Relation Name": "publication",
-           "Alias": "publication",        
-           "Startup Cost": 0.00,          
-           "Total Cost": 15525.89,        
-           "Plan Rows": 574989,           
-           "Plan Width": 106              
-         }                                
-       ]                                  
+        "Node Type": "Limit",              
+        "Parallel Aware": false,           
+        "Startup Cost": 0.00,              
+        "Total Cost": 0.27,                
+        "Plan Rows": 10,                   
+        "Plan Width": 106,                 
+        "Plans": [
+            {                                
+                "Node Type": "Seq Scan",       
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,       
+                "Relation Name": "publication",
+                "Alias": "publication",        
+                "Startup Cost": 0.00,          
+                "Total Cost": 15525.89,        
+                "Plan Rows": 574989,           
+                "Plan Width": 106              
+            }                                
+        ]                                  
     }
     '''
-    test_plan = json.loads(test)
-    print(limit_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(limit_parser(JSON_PLAN, start=True))

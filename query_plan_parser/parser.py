@@ -73,11 +73,14 @@ def get_conjuction(start=False):
 def initplan(plan, start=False):
     """ Check for InitPlan """
     result = ""
- 
+
     if "Parent Relationship" in plan:
         if plan["Parent Relationship"] == "InitPlan":
             result = get_conjuction(start)
-            result += "the " + plan["Node Type"] +  " node and its subsequent child node is executed first since the result from this node needs to be calculated first and it is only calculated once for the whole query. "
+            result += "the " + plan["Node Type"]
+            result += " node and its subsequent child node is executed first"
+            result += " since the result from this node needs to be calculated first"
+            result += " and it is only calculated once for the whole query. "
             result += "The plan is as follows:"
-            
+
     return result

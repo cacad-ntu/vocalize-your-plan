@@ -7,7 +7,6 @@ import query_plan_parser.parser
 
 def aggregate_parser(plan, start=False):
     """ Parser for Aggregate node type """
-    # parsed_plan = query_plan_parser.parser.initplan(plan, start)
 
     if plan["Strategy"] == "Sorted":
         parsed_plan = query_plan_parser.parser.parse_plan(plan["Plans"][0], start)
@@ -46,6 +45,7 @@ def aggregate_parser(plan, start=False):
         parsed_plan += "the result is aggregated."
         return parsed_plan
 
+
 if __name__ == "__main__":
     PLAN = '''
     {                                                        
@@ -79,30 +79,30 @@ if __name__ == "__main__":
     JSON_PLAN = json.loads(PLAN)
     print(aggregate_parser(JSON_PLAN, start=True))
 
-    test = '''
+    PLAN2 = '''
     {                                                   
-       "Node Type": "Aggregate",                                 
-       "Strategy": "Hashed",                                     
-       "Partial Mode": "Simple",                                 
-       "Parallel Aware": false,                                  
-       "Startup Cost": 40297.34,                                 
-       "Total Cost": 40494.72,                                   
-       "Plan Rows": 19738,                                       
-       "Plan Width": 23,                                       
-       "Group Key": ["b.author"],                              
-       "Plans": [                                                
-        {                                                       
-           "Node Type": "Unrecognize",                           
-           "Parent Relationship": "Outer",                       
-           "Parallel Aware": false,                              
-           "Join Type": "Inner",                                 
-           "Startup Cost": 16963.82,                             
-           "Total Cost": 40198.65,                               
-           "Plan Rows": 19738,                                   
-           "Plan Width": 15
-        }
+        "Node Type": "Aggregate",                                 
+        "Strategy": "Hashed",                                     
+        "Partial Mode": "Simple",                                 
+        "Parallel Aware": false,                                  
+        "Startup Cost": 40297.34,                                 
+        "Total Cost": 40494.72,                                   
+        "Plan Rows": 19738,                                       
+        "Plan Width": 23,                                       
+        "Group Key": ["b.author"],                              
+        "Plans": [                                                
+            {                                                       
+                "Node Type": "Unrecognize",                           
+                "Parent Relationship": "Outer",                       
+                "Parallel Aware": false,                              
+                "Join Type": "Inner",                                 
+                "Startup Cost": 16963.82,                             
+                "Total Cost": 40198.65,                               
+                "Plan Rows": 19738,                                   
+                "Plan Width": 15
+            }
         ]
     }
     '''
-    test_plan = json.loads(test)
-    print(aggregate_parser(test_plan))
+    JSON_PLAN2 = json.loads(PLAN2)
+    print(aggregate_parser(JSON_PLAN2))

@@ -29,8 +29,9 @@ def merge_join_parser(plan, start=False):
 
     return result
 
+
 if __name__ == "__main__":
-    test = '''
+    PLAN = '''
     {                                                   
         "Node Type": "Merge Join",                                             
         "Parent Relationship": "Outer",                                        
@@ -48,5 +49,5 @@ if __name__ == "__main__":
         ]
     }
     '''
-    test_plan = json.loads(test)
-    print(merge_join_parser(test_plan, start=True))
+    JSON_PLAN = json.loads(PLAN)
+    print(merge_join_parser(JSON_PLAN, start=True))
